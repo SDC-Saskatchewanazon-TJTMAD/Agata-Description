@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-const _ = require("lodash");
 const faker = require("faker");
 const db = require("./index.js");
 
@@ -10,7 +8,7 @@ const pushBatch = (countSoFar, target) => {
   let descriptions = [];
   for (let i = 0; i < 1000; i++) {
     descriptions.push({
-      product_Id: i + countSoFar,
+      _id: i + countSoFar,
       productName: faker.commerce.productName(),
       productDescription: faker.lorem.words(30),
       price: faker.commerce.price(),
