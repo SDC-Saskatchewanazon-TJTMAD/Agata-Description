@@ -9,20 +9,17 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      productId: [4],
-      title: [],
-      description: [],
+      productId: 1,
+      productName: [],
+      productDescription: [],
       price: [],
       ratings: 0
     };
-    //this.getDescriptionInfo = this.getDescriptionInfo.bind(this);
-    this.getDescription = this.getDescription.bind(this);
+    this.getDescriptionInfo = this.getDescriptionInfo.bind(this);
   }
 
   componentDidMount() {
-    // axios function
-    // this.getDescriptionInfo();
-    this.getDescription();
+    this.getDescriptionInfo();
     // Event Listener that updates the product ID for my component
     // window.addEventListener("click", event => {
     //   if (
@@ -61,14 +58,20 @@ class App extends React.Component {
   //     });
   // }
 
-  getDescription() {
+  getDescriptionInfo() {
     axios
-      .get("/description")
+      .get("/description", { params: { listing_id: this.state.productId } })
       .then(response => {
         console.log(response);
+        this.setState({
+          productName: response.data.productName,
+          productDescription: response.data.productDescription,
+          price: response.data.price,
+          ratings: response.data.rating
+        });
       })
       .catch(error => {
-        console.log("erro " + error);
+        console.log("error " + error);
       });
   }
 
@@ -77,7 +80,7 @@ class App extends React.Component {
     return (
       <div>
         <div>
-          <Title title={this.state.title} />
+          <Title title={this.state.productName} />
           <Rating2
             ratings={this.state.ratings}
             productId={this.state.productId}
@@ -96,7 +99,7 @@ class App extends React.Component {
         </div>
         <br></br>
         <div>
-          <Description description={this.state.description} />
+          <Description description={this.state.productDescription} />
         </div>
         <hr></hr>
       </div>

@@ -1,7 +1,7 @@
 const express = require("express");
 var cors = require("cors");
 const app = express();
-const port = 8081; // updated from 3000
+const port = 8081;
 const path = require("path");
 const db = require("../db/index.js");
 //const db = require("../db/postgres.js");
@@ -13,7 +13,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// This line is necessary to render React files
 app.use(express.static(path.join(__dirname, "/../client/dist")));
 
 // get request using sendProductTask
@@ -31,24 +30,14 @@ app.use(express.static(path.join(__dirname, "/../client/dist")));
 // });
 
 app.get("/description", (req, res) => {
-  Data.findOne({ rating: 2 }, (err, data) => {
+  console.log(req.query.listing_id);
+  Data.findOne({ _id: req.query.listing_id }, (err, data) => {
     if (err) {
       res.send(err);
     } else {
-      console.log("data" + data);
       res.send(data);
     }
   });
 });
-
-// app.get("/description", (req, res) => {
-//   db.getDescriptionInfo((err, data) => {
-//     if (err) {
-//       res.send(err);
-//     } else {
-//       res.send(data);
-//     }
-//   });
-// });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
