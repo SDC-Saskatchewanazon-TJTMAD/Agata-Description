@@ -10,15 +10,18 @@ const client = new Client({
 
 client.connect();
 
-const getDescriptionInfo = callback => {
-  client.query("SELECT * FROM Description", (err, data) => {
-    if (err) {
-      callback(err, null);
-    } else {
-      callback(null, data);
+const getDescriptionInfo = (productId, callback) => {
+  client.query(
+    `SELECT product_name, product_description, price, rating FROM descriptions where product_id = '${productId}'`,
+    (err, data) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, data);
+      }
+      client.end();
     }
-    client.end();
-  });
+  );
 };
 
 module.exports = { getDescriptionInfo };

@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const DataSchema = new Schema(
   {
+    _id: Number,
     productName: String,
     productDescription: String,
     price: Number,

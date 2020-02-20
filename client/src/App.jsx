@@ -36,28 +36,7 @@ class App extends React.Component {
     //   }
     // });
   }
-
-  // GET request for product info from the db
-  // getDescriptionInfo() {
-  //   axios
-  //     .get(
-  //       `http://descriptions-env.62m3r6bcww.us-east-2.elasticbeanstalk.com/products/${this.state.productId}`
-  //     )
-  //     .then(response => {
-  //       console.log("successful get request" + JSON.stringify(response));
-  //       // this.setState({
-  //       //   // I need to refactor these request to pull specific information for title, description, and price
-  //       //   title: response.data,
-  //       //   description: response.data,
-  //       //   price: response.data,
-  //       //   ratings: response.data[0].rating
-  //       // });
-  //     })
-  //     .catch(function(error) {
-  //       console.log(error);
-  //     });
-  // }
-
+  //GET request for MongoDB
   getDescriptionInfo() {
     axios
       .get("/description", { params: { listing_id: this.state.productId } })
@@ -75,7 +54,23 @@ class App extends React.Component {
       });
   }
 
-  // renders four components, Title, Price, Rating2 and Description
+  //GET request for PostgreSQL
+  // getDescriptionInfo() {
+  //   axios
+  //     .get("/description", { params: { listing_id: this.state.productId } })
+  //     .then(response => {
+  //       this.setState({
+  //         productName: response.data.rows[0].product_name,
+  //         productDescription: response.data.rows[0].product_description,
+  //         price: response.data.rows[0].price,
+  //         ratings: response.data.rows[0].rating
+  //       });
+  //     })
+  //     .catch(error => {
+  //       console.log("error " + error);
+  //     });
+  // }
+
   render() {
     return (
       <div>

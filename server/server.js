@@ -3,9 +3,9 @@ var cors = require("cors");
 const app = express();
 const port = 8081;
 const path = require("path");
-const db = require("../db/index.js");
-//const db = require("../db/postgres.js");
-//const db = require("./db.js");
+const db = require("../db/index.js"); //mongoDB
+//const db = require("../db/postgres.js"); //postgres
+//const db = require("./db.js");            //mysql
 const bodyParser = require("body-parser");
 const Data = require("../db/data.js");
 
@@ -15,20 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "/../client/dist")));
 
-// get request using sendProductTask
-// app.get("/products/:productId", (req, res) => {
-//   // const productId = req.params.productId;
-//   // db.sendProductTask(productId, (err, results) => {
-//   //   if (err) {
-//   //     console.log(err);
-//   //   } else {
-//   //     res.send(results);
-//   //     res.end();
-//   //   }
-//   // });
-//   console.log("hello");
-// });
-
+//GET request for MongoDB
 app.get("/description", (req, res) => {
   console.log(req.query.listing_id);
   Data.findOne({ _id: req.query.listing_id }, (err, data) => {
@@ -39,5 +26,19 @@ app.get("/description", (req, res) => {
     }
   });
 });
+
+//GET request for POSTGRESQL
+// app.get("/description", (req, res) => {
+//   console.log(req.query.listing_id);
+//   const productId = req.query.listing_id;
+//   db.getDescriptionInfo(productId, (err, data) => {
+//     if (err) {
+//       res.send(err);
+//     } else {
+//       console.log(data);
+//       res.send(data);
+//     }
+//   });
+// });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
